@@ -184,7 +184,8 @@ while gameOn:
 
 # End of "while gameOn:" loop
 # ===========================
-#
-# Press Reset button for new game.
+# Restart game after 3 seconds
+sleep(3000)
+reset()
 #
 # EOF
