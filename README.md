@@ -2,7 +2,7 @@ You found it!
 
 William Moore's Repository of MicroPython Programs and other teaching materials.
 
-I have created a branch called Microbit-Pong-Games.
+I have created a branch called "Microbit-Pong-Games".
 
 Now all I need to do is to see if I can find it... and how (or should I) 
 
