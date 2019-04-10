@@ -187,5 +187,5 @@ while gameOn:
 # Restart game after 3 seconds
 sleep(3000)
 reset()
-#
+
 # EOF
