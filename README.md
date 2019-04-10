@@ -64,8 +64,9 @@ C.) A version of my Simple Pong Game for the Micro:bit/Scroll:bit Hardware Combo
     
         brightness = [0, 5, 10, 20, 40, 80, 160]
     
-   So, in my pong game, the paddle is 40 (brightness[4]) and the ball is 10 (brightness[2]). This allows 
-   me a fairly good level of distinguishability, especially for an "indoors game". Outdoors, or under 
-   bright lights, you may need to increase the brightness of the LED pixels. This is generally true for
-   most of my games, as I develop them in rather low-light conditions at my home.
+    So, in my pong game, the paddle is 40 (brightness[4]) and the ball is 10 (brightness[2]). This allows 
+    me a fairly good level of distinguishability, especially for an "indoors game". Outdoors, or under 
+    bright lights, you may need to increase the brightness of the LED pixels. This is generally true for
+    most of my games, as I develop them in rather low-light conditions at my home.
 
+# EOF
