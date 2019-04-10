@@ -1,7 +1,7 @@
 #
 # My Simple Pong Game, version 1
 # Written for the BBC Microbit and its 5x5 red LED dispaly
-# April 2, 2019
+# April 9, 2019
 #
 # Filename = "mbSimplePong.py"
 
@@ -80,17 +80,18 @@ while gameOn:
         padY = oldPadY
 
     # Make sure new y-coordinate is still in range (0 to 4)
-    if padY < 0:         padY = 0     if padY > 4:
+    if padY < 0:
+        padY = 0
+    if padY > 4:
         padY = 4
 
-    # Test Code: Move pixel anywhere on display
-    # display.set_pixel(padX, padY, 9)
+    # Test Code: Move paddle pixel anywhere on display
+    # display.set_pixel(oldPadX, oldPadY, 0)    # Turn-off LED at old paddle position
+    # display.set_pixel(padX, padY, 9)          # Turn-on LED at new paddle position
 
-    # Turn off paddle's last position
-    display.set_pixel(oldPadX, 4, 0)
-
-    # Turn on paddle's new position
-    display.set_pixel(padX, 4, 9)
+    # Limit paddle pixel to bottom row of the display
+    display.set_pixel(oldPadX, 4, 0)          # Turn-off LED at old paddle position
+    display.set_pixel(padX, 4, 9)             # Turn-on LED at new paddle position
 
     # =====================
     #  Ball Movement Code:
@@ -128,19 +129,13 @@ while gameOn:
 
     # Case where paddle missed ball
     elif ballY >= 4 and padX != ballX:
-
-        # turn off pervious ball location (LED)
-        display.set_pixel(oldBallX, oldBallY, 0)
-
-        # turn on new ball location (LED)
-        display.set_pixel(ballX, ballY, 5)
+        display.set_pixel(oldBallX, oldBallY, 0
+        display.set_pixel(ballX, ballY, 5)      # turn-on LED at new ball location
         sleep(delay)
+        display.set_pixel(ballX, ballY, 0))     # turn-off LED at new ball location
 
-        # turn off new ball location (LED)
-        display.set_pixel(ballX, ballY, 0)
-
-        hitCount -= 1                         # Decrement score
-        # ballDirection *= -1                 # Change ball direction (up)
+        hitCount -= 1             # Decrement score
+        # ballDirection *= -1     # Change ball direction (up) [this line cancels out line 158]
 
         # Check if computer won...
         if hitCount <= -(maxScore):
@@ -152,23 +147,20 @@ while gameOn:
 
         # Serve a new ball...
         ballY = 0
-        ballX = randint(0, 4)       # Select new random column to serve ball in.
-        sleep(randint(1, 5) * 100)  # randomize delay before next ball serve.
-
-        # Turn off pervious ball location (LED)
-        display.set_pixel(oldBallX, oldBallY, 0)
-
-        # Turn on new ball location (LED)
-        display.set_pixel(ballX, ballY, 5)
-        # ballDirection *= -1        # change ball direction (down)
+        ballX = randint(0, 4)           # Select new random column to serve ball in.
+        sleep(randint(1, 5) * 100)      # Randomize delay before next ball serve.
+        
+        display.set_pixel(oldBallX, oldBallY, 0)    # turn-off LED at old ball location
+        display.set_pixel(ballX, ballY, 5)          # turn-on LED at new ball location
+        # ballDirection *= -1    # change ball direction (down) [this line cancels out line 138]
 
     # Case where ball bounces back up to the top wall.
     elif ballY == 0:
-        display.set_pixel(oldBallX, oldBallY, 0)    # turn off last ball
-        display.set_pixel(ballX, ballY, 5)  # display last ball at top of column
+        display.set_pixel(oldBallX, oldBallY, 0)    # turn-off LED at old ball location
+        display.set_pixel(ballX, ballY, 5)          # turn-on LED at new ball location
         sleep(delay)
-        display.set_pixel(ballX, ballY, 0)  # turn off last ball
-
+        display.set_pixel(ballX, ballY, 0)          # turn-off LED at new ball location
+        
         ballX = randint(0, 4)      # Select new random column to serve ball in.
         ballDirection *= -1
         sleep(randint(1, 5) * 100) # Randomize delay before next ball serve.
@@ -180,16 +172,12 @@ while gameOn:
         # Debug code:
         print("ballY = " + str(ballY))       # View print() output using REPL
 
-        # turn off pervious ball location (LED)
-        display.set_pixel(oldBallX, oldBallY, 0)
-
-        # turn on new ball location (LED)
-        display.set_pixel(ballX, ballY, 5)
+        display.set_pixel(oldBallX, oldBallY, 0)    # turn-OFF LED at old ball location
+        display.set_pixel(ballX, ballY, 5)      # turn-on LED at new ball location
 
     # Make ball speed-up as it falls and slow-down as it rises.
-    #delay = 128 - 16 * ballX   # was 8
-    #sleep(delay)
-
+    # delay = 128 - 16 * ballX   # was 8
+    # sleep(delay)
 
     if button_a.is_pressed():
         display.scroll(hitCount)            # Show current score
