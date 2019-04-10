@@ -129,7 +129,7 @@ while gameOn:
 
     # Case where paddle missed ball
     elif ballY >= 4 and padX != ballX:
-        display.set_pixel(oldBallX, oldBallY, 0
+        display.set_pixel(oldBallX, oldBallY, 0)
         display.set_pixel(ballX, ballY, 5)      # turn-on LED at new ball location
         sleep(delay)
         display.set_pixel(ballX, ballY, 0))     # turn-off LED at new ball location
