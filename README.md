@@ -32,7 +32,11 @@ Here are several versions of my "Simple Pong Game" for various configurations of
             now controlled via Micro:bit "pin8". So, in the code, we create an instance of our neopixel object
             class using this command: "np = neopixel.NeoPixel(pin8, 32)". That's "pin8" instead of "pin0".
 
-    C.) A version of my Simple Pong Game for the Micro:bit/Scroll:bit Hardware Combo.
+    C.) The version of my Simple Pong Game for the Micro:bit/Scroll:bit hardware combo has the filename 
+        "sbSimplePongGame1.py". This version requires a special trimmed down version of the "scrollbit"
+        library module I named "futz.py". This library module must be loaded into the Micro:bit file system
+        using the Mu editor's File Button feature. You can just drag and drop, pretty simple. The smaller "futz"
+        library allows me to avoid memory errors associated with using the full feature "scrollbit" library.
 
         The Pimoroni "Scroll:bit" display board provides the Micro:bit with a much larger 7x17 low-power white 
         LED display option. For more info on this display, check out this URL:    
