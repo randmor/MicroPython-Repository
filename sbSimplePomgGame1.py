@@ -7,14 +7,6 @@
 #                April 10, 2019
 #                    Enjoy!
 #`
-# I was running up against memory errors, so I trimmed out a few features.
-#
-# One bug that remains occurs when the paddle misses the ball. I can correct
-# for it, but problem should not be occuring. The debug (fix) code is still 
-# enabled. See code around lines 206 to 215. I will try to figure out the bug 
-# and correct it. If you spot the problem in my code, let me know so I can 
-# fix it properly.
-#
 # Filename = "sbSimplePongGame1.py"
 
 from microbit import display, Image, accelerometer, sleep, button_a, reset
@@ -34,7 +26,7 @@ brightness = [0, 5, 10, 20, 40, 80, 160]
 
 maxScore = 6    # Change this if you want more rounds / game.
 gestureSensitivity = 120
-delay = 128
+delay = 250
 
 # Set initial position of pong game's "paddle"
 padX = 16
@@ -62,15 +54,13 @@ hitCount = 0
 gameOn = True
 
 while gameOn:
-    clear()
-    display.clear()
 
     # Modify game timing to adjust game "hardness/easiness"
-    sleep(delay)       # Makes game easy
+    # sleep(delay)       # Makes game easy
     # sleep(delay//2)    # Not so easy
     # sleep(delay//4)    # Moderate
-    # sleep(delay//8)    # Harder
-    # no 'sleep(delay)' == Hardest
+
+    display.clear()
 
     # Get accelerometer's x-axis and y-axis values so we can move
     # the paddle around using accelerometor's x,y coordinates
@@ -119,6 +109,7 @@ while gameOn:
     # plot(padX, padY, brightness[4])
 
     # Move paddle pixel Left/Right on row 16 (in portrait mode)
+    plot(16, oldPadY, brightness[0])
     plot(16, padY, brightness[4])
 
     # =====================
@@ -142,41 +133,35 @@ while gameOn:
 
         # Check if player won...
         if hitCount >= maxScore:
-
             # Bounce the ball back to the top one last time
             for i in range(15, -1, -1):
                 plot(i, ballY, brightness[2])
-                sleep(128 - 8 * i)
+                sleep((128 - 8 * i) * 2)
                 plot(i, ballY, brightness[0])
-
-            clear()
-            sleep(delay)
-            display.scroll("You won!")
-            display.show(hapFace)
-            sleep(3000)
+                
+            plot(16, padY, brightness[0])  # Turn-off paddle LED
             gameOn = False
-            continue
+            continue 
 
     # Case where paddle missed ball
     elif ballX >= 16 and padY != ballY:
-
-        # plot last ball
-        plot(ballX, ballY, brightness[2])
-
+        
+        plot(oldBallX, oldBallY, brightness[0]) # Turn-off LED at old position
+        plot(ballX, ballY, brightness[2])       # Turn-on LED at top of column
+        
         display.show(sadFace)
-        sleep(250)
-
-        hitCount -= 1                       # Decrement score
-        # ballDirection *= -1                 # change ball direction (up)
-
+        sleep(delay)
+        plot(ballX, ballY, brightness[0])       # Turn-off LED at top of column
+        
+        hitCount -= 1                 # Decrement score
+        # ballDirection *= -1         # change ball direction (up)
+        
         # Check if computer won...
-        if hitCount < -(maxScore):
-            clear()
-            display.scroll("Game Over, computer won.")
-            display.show(sadFace)
-            sleep(3000)
-            reset()
-
+        if hitCount <= -(maxScore):
+            plot(16, padY, brightness[0])  # Turn-off paddle LED
+            gameOn = False
+            continue 
+            
         # Serve a new ball...
         ballX = 0
         ballY = randint(0, 6)               # Select new random column to serve ball in.
@@ -186,21 +171,24 @@ while gameOn:
 
     # Case where ball bounces back up to the top wall.
     elif ballX == 0:
-        plot(ballX, ballY, brightness[2])   # display last ball at top of column
+        plot(oldBallX, oldBallY, brightness[0])  # Turn-off LED at old ball position
+        plot(ballX, ballY, brightness[2])        # Turn-on LED (ball) at top of column
         sleep(delay)
-        plot(ballX, ballY, brightness[0])   # turn off last ball
-
-        ballY = randint(0, 6)               # Select new random column to serve ball in.
+        plot(ballX, ballY, brightness[0])        # Turn-off LED (ball) at top of column
+        
+        ballY = randint(0, 6)        # Select new random column to serve ball in.
         ballDirection *= -1
-        sleep(randint(1, 5) * 100)          # randomize delay before next ball serve.
-        plot(ballX, ballY, brightness[2])
+        sleep(randint(1, 5) * 100)   # Randomize delay before next ball serve.
+              
+        plot(ballX, ballY, brightness[2])        # Turn-on LED (ball) at new position
 
     # Other cases where ball is either rising or falling
     else:
         # Debug code:
         print("ballX =" + str(ballX))       # View print() output using REPL
-
-        plot(ballX, ballY, brightness[2])
+        
+        plot(oldBallX, oldBallY, brightness[0])  # Turn-off LED at old position
+        plot(ballX, ballY, brightness[2])        # Turn-on LED at new position
 
     # Make ball speed-up as it falls and slow-down as it rises.
     delay = 128 - 8 * ballX
@@ -209,21 +197,16 @@ while gameOn:
     if button_a.is_pressed():
         display.scroll(hitCount)            # Show current score
 
-    # Debug code:  Seems something is making ballX > 16. Should not be.
-    if ballX > 16:
-
-        for i in range(0,6):
-            display.set_pixel(0,0,0)        # Signal error
-            sleep(500)
-            display.set_pixel(0,0,9)
-            sleep(500)
-
-        ballX = 16      # my "fix" (now sad face "blinks")
-
 # End of "while gameOn:" loop
 # ===========================
-# Press Micro:bit's "Reset" button for a new game.
+display.scroll("Game Over,")
+if hitCount >= maxScore:
+    display.scroll(" You won.")
+    display.show(hapFace)
+else:
+    display.scroll(" Micro:bit won.")
+    display.show(sadFace)
+sleep(3000)
+reset()        # Start a new game.
 
 # EOF
-
-
