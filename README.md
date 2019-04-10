@@ -39,14 +39,18 @@ C.) A version of my Simple Pong Game for the Micro:bit/Scroll:bit Hardware Combo
     
         https://shop.pimoroni.com/products/scroll-bit
     
-    I have this version working will upload it here later today.
+    I have uploaded my Scroll:bit version of "Simple Pong" wich is the file named "sbSimplePongGame1.py".
+    I wrote this game assuming the board combo would be held in the "portrait" orientation so the the 
+    Micro:bit is turned 90 degrees to the right of how it is normally held. This makes the 7x17 white 
+    LED display "long" along the vertical axis and "short" along the horizontl axis.
     
     I like the fact that the Pimoroni design adds the new display to the same side of the Micro:bit 
     board as its 5x5 red LED display. This allows you to write programs that use both displays at 
     the same time (i.e. without having to constantly flip the board combo over and back again). In 
     my game, I use the 5x5 display for sending messages (like the score) and emojis (e.g. "happy face" 
     when you score a point, "sad face" when you loose a point). That frees up the 7x17 display to be 
-    used for our "gameboard". 
+    used for our "gameboard". I added a bit of code so the ball speed would increase as it gets closer
+    to the bottom of the display, so player be warned.
     
     Also, the Pimoroni Scroll:bit design does not cover up the Micro:bit's Reset button. This is a 
     sometimes frustrating "feature" of the Proto-PIC design: inaccessibility of the reset button. 
