@@ -5,11 +5,15 @@
 # This file contains the source code to several MicroPython demo programs to be
 # used in this second lesson. It also contains much of the lesson plan.
 #
+# Part 1: Video & MicroPython: Images, Buttons, and Conditionals
+#
 # To get the students to focus on the subject matter, begin Lesson #2 by viewing
 # Shawn Hymel's second YouTube video called "Images, Buttons, and Conditionals"
 # at this URL:
 #
 #       https://www.youtube.com/watch?v=XMr6Fg74fZY
+#
+# Part 2: The Mu Editor
 #
 # After the video, introduce the "Mu" editor for Microbit / MicroPython. Use the
 # "big screen" monitor wth my laptop to show the kids the basics of using Mu to
@@ -21,16 +25,16 @@
 '''
 
 #
-# Lesson #2, Demo Progrm #1:
+# Lesson #2, Demo Program #1:
 #
 # This program will initially display a red "heart" image to show that the program
 # has loaded and is running okay. It will then display a "Meh face". But, if you click
-# on either button "A" or button"B", then it will display either a "Happy Face" or a
+# on either button "A" or button "B", then it will display either a "Happy Face" or a
 # "Sad Face" depending upon which push-button was pressed. You may need to "press & hold"
-# the buttons to see the face changes. A really quick click may not be sensed by the
-# program because of it's use of the sleep() function. We are using a relatively short
-# delay of 1/3 a second, so this need to "press & hold" won't likely be needed, but if
-# you make it a 2 or 3 second delay, then you will need to "press & hold".
+# the buttons to see the face changes. A really quick click on a button may not be sensed 
+# by the program because of it's use of the sleep() function. We are using a relatively 
+# short delay of 1/3 a second, so this need to "press & hold" won't likely be needed, but
+# if you make it a 2 or 3 second delay, then you will need to "press & hold".
 #
 
 from microbit import *
@@ -53,7 +57,7 @@ while True:
 
     # After that test, un-comment the line and change it to read "sleep(3000)"
     # and see what happens when you run the program. What do you have to do in
-    # order to get a happy or sad face?
+    # order to get a happy or sad face?   (Answer: "press & hold" the button.)
 
     sleep(333)      	
 
@@ -91,7 +95,7 @@ display.show(Image.HEART)     # Show program has loaded and is running.
 sleep(delay)
 
 while True:
-    if button_a.is_pressed() and button_b.is_pressed() :
+    if button_a.is_pressed() and button_b.is_pressed():
         display.show(Image.SURPRISED)
         sleep(delay//4)
 
@@ -144,28 +148,31 @@ while True:
 
 '''
 
-# With Demo Program #3 we explore how to create user-defined variables.
-# There are two ways to lay out the user defined image definition in a
+# With Demo Program #3 we explore how to create user-defined images.
+# There are two ways to lay-out the user-defined image definition in a
 # text oriented Python program. Both methods are shown in demo program #3.
-# The user defined image called "boat1" uses the multi-line approach
+# The user-defined image called "boat1" uses the multi-line approach
 # which allows the programmer to more easily visualize which LEDs in the
-# 5x5 red LED display are lit, and how bright they are. The second approach
-# is a very succinct one liner as was used to define the "boat2" image.
-# But, the easiest way is to ue the EduBlock's "Display / image" block
-# command which you can easily translate to Python code and then cut and
-# paster into your Python editor of choice.
+# 5x5 red LED display are lit, and how bright they are. The second single 
+# line approach is a very succinct way to define a user-defined image that
+# is more difficult to read, but saves space in the source code listing. 
+# Notice that the "boat2" image is defined using this single-line format.
+#
+# But, the easiest way to define a user-defined image is to use EduBlock's 
+# "Display / image" block command that makes it easy to view which LED will 
+# be lit (and to what brightness), and you can easily translate it to Python 
+# code and then "cut and paste" the line of code into your Python editor.
 
 '''
 
-# Lesson #2, Demo Progrm #3:
+# Lesson #2, Demo Program #3:
 
-# Program demonstrates how to create your own "used-defined" images.
+# This program demonstrates how to create your own "used-defined" images.
 #
 # There are two ways to define a user-defined image: "single line" or
 # "multi-line" with the latter allowing the programmer an easier way
 # to visualize the pixels in his/her mind.
 #
-# Filename: Demo_L2-03.py
 
 from microbit import *
 
