@@ -1,5 +1,5 @@
 #
-#   "Microbit / MicroPixel Simple Pong Game, Version 2"
+#   "Micro:bit / Micro:Pixel Simple Pong Game, Version 2"
 #       Written by William Moore
 #           of Walnut Creek, CA (USA)
 #               April 10, 2019
@@ -12,13 +12,13 @@
 # GPIO pin (plus 3V and GND). These devices are called variously
 # "NeoPixels", "ZIP LEDs", or "WS2812B LEDs".
 #
-# This game is written such that the Micro:bit / Micro:Pixel board
+# This game is written such that the Micro:bit/Micro:Pixel board
 # combo has to be held in "portrait" orientation (turned 90 degrees
 # clockwise from the "normal" (landscape) orientation). This simple
 # version of pong ignores bouncing the "ball" off the sides of the
 # so we can better focus on the basics of the program.
 #
-# Also in version 2, I have integrated music and sound effects into
+# Also in Version 2, I have integrated music and sound effects into
 # this pong game program. Be aware that I have modified my Proto-PIC
 # MicroPixel board to use "pin8" instead of "pin0" since I'm now
 # using "pin0" to drive a speaker. This modification involves a
@@ -57,7 +57,7 @@ colors = [(mb, 0, 0),  (0, mb, 0),  (0, 0, mb),  (mb, mb/2, 0),
 black = (0, 0, 0)
 
 gestureSensitivity = 128
-delay = 100
+delay = 200
 
 np.clear()
 
@@ -103,7 +103,7 @@ gameOn = True
 
 while gameOn:
 
-    sleep(delay*2)   # SLow down game to make easier to play
+    sleep(delay)   # SLow down game to make easier to play
     
     # =======================
     #  Paddle Movement Code:
@@ -221,16 +221,18 @@ while gameOn:
         display.scroll(hitCount)            # Show current score
 
 # ==========[ End of "while gameOn:" loop ]==========
-if hitCount >= numScores:       # You won!
-    display.show(Image.HAPPY)   # Show "happy face" on 5x5 red LED display
-    color = (0, mb, 0)          # Make color = green to signal a win.
+if hitCount >= numScores:      # You won!
+    display.show(Image.HAPPY)  # Show "happy face" on 5x5 red LED display
+    color = (0, mb, 0)         # Make color = green to signal a win.
 
-else:                           # You lost!
-    display.show(Image.SAD)     # Show "sad face" on 5x5 red LED display
-    color = (mb, 0, 0)          # Make color = red to signal a loss.
+else:                          # You lost!
+    display.show(Image.SAD)    # Show "sad face" on 5x5 red LED display
+    color = (mb, 0, 0)         # Make color = red to signal a loss.
 
-for pix in range(0, len(np)):   # Paint display either green or red to
-    np[pix] = color             # signal a game win or loss.
+npPlot2(padX, 7, black)
+
+for pix in range(len(np) - 1, 0, -3):  # Paint display either green or red 
+    np[pix] = color                    # to signal a game win or loss.
     np.show()
 
 # Play a tune as a reward (or as punishment).
@@ -240,6 +242,8 @@ else:
     music.play(music.FUNERAL)
 
 np.clear()
+
 reset()
 
 # EOF
+
