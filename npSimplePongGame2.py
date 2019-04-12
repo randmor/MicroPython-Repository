@@ -2,7 +2,7 @@
 #   "Micro:bit / Micro:Pixel Simple Pong Game, Version 2"
 #       Written by William Moore
 #           of Walnut Creek, CA (USA)
-#               April 10, 2019
+#               April 11, 2019
 #                   Enjoy!
 #
 # This program requires both the BBC Micro:bit board coupled with
@@ -103,7 +103,7 @@ gameOn = True
 
 while gameOn:
 
-    sleep(delay)   # SLow down game to make easier to play
+    sleep(delay)   # Slow down game to make it easier to play
     
     # =======================
     #  Paddle Movement Code:
@@ -194,7 +194,6 @@ while gameOn:
         npPlot2(ballX, ballY, colors[0])    # On miss, paint ball red
         np.show()             
              
-
     # Case where ball bounces back to top wall.
     elif ballY == 0:
         music.pitch(440 + ballY * 32, 100)
@@ -202,7 +201,6 @@ while gameOn:
         npPlot2(ballX, ballY, ballColor)    # Turn-on LED at new ball location
         np.show()
         sleep(delay)
-        np.show()
         npPlot2(ballX, ballY, black)
         ballX = randint(0, 3)    # Select new random column to drop ball from.
         ballDirection *= -1
@@ -246,4 +244,3 @@ np.clear()
 reset()
 
 # EOF
-
