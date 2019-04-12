@@ -4,6 +4,10 @@
 #         of Walnut Creek, CA (USA)
 #               April 11, 2019
 #                   Enjoy!
+# 
+# NOTE: If you get an error like "program too long" when you 
+# go to flash this program to your Micro:bit, just delete this 
+# comment and the next 3 paragraphs of comments and try it again.
 #
 # This program requires both the BBC Micro:bit board and the
 # Proto-PIC (UK) "Micro:Pixel" display board. The Micro:Pixel
