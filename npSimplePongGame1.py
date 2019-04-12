@@ -57,9 +57,8 @@ colors = [(mb, 0, 0),  (0, mb, 0),  (0, 0, mb),  (mb, mb/2, 0),
 
 black = (0, 0, 0)
 
-numScores = 6    # Change this if you want more rounds / game.
 gestureSensitivity = 128
-speed = 250
+delay = 250
 
 # Set initial position of pong game's "paddle"
 padX = 2
@@ -89,20 +88,25 @@ for i in range(0, 5):
     np.show()
     sleep(speed)
 
-sleep(speed * randint(2, 7))
+sleep(delay * randint(2, 7))
 ballX = randint(0, 3)
 npPlot2(ballX, ballY, ballColor)
 np.show()
-sleep(speed)
+sleep(delay)
 ballDirection = 1  # Falling
+
+numScores = 6    # Change this if you want more rounds / game.
 hitCount = 0
 gameOn = True
 
 while gameOn:
-
-    '''
-    Paddle Movement Code:
-    '''
+    
+    sleep(delay)   # SLow down game to make easier to play
+    
+    # =======================
+    #  Paddle Movement Code:
+    # =======================
+    
     # Get accelerometer's x-axis and y-axis values.
     # I had to switch yVal and xVal around to get
     # the program to behave properly in portait mode.
@@ -132,16 +136,17 @@ while gameOn:
         padX = 3
 
     npPlot2(oldPadX, 7, black)  # Turn-off LED at old paddle location
-    npPlot2(padX, 7, padColor)
+    npPlot2(padX, 7, padColor)  # Turn-on LED at new paddle location
 
-    '''
-    Ball Movement Code:
-    '''
+    # =======================
+    #   Ball Movement Code:
+    # =======================
+    
     # Save previous ball "x,y" location
     oldBallX = ballX
     oldBallY = ballY
 
-    ballY = ballY + ballDirection
+    ballY = ballY + ballDirection           # Move ball down 1 more row
 
     # Case where paddle hit ball
     if ballY == 7 and padX == ballX:
@@ -161,13 +166,22 @@ while gameOn:
         npPlot2(oldBallX, oldBallY, black)  # Turn off LED at old ball location
         npPlot2(ballX, ballY, colors[0])    # On miss, paint ball red
         np.show()
-        sleep(250)
+        sleep(delay)
         ballDirection *= -1
         hitCount -= 1                       # Decrement score
-
+        
         if hitCount <= -numScores:           # When you have 21 hits you win!
             gameOn = False
             continue
+        
+        # Serve a new ball...
+        ballY = 0
+        ballX = randint(0, 4)           # Select new random column to serve ball in.
+        sleep(randint(1, 5) * 100)      # Randomize delay before next ball serve. 
+        
+        npPlot2(oldBallX, oldBallY, black)  # Turn-off LED at old ball location
+        npPlot2(ballX, ballY, colors[0])    # On miss, paint ball red
+        np.show() 
 
     # Case where ball bounces back to top wall.
     elif ballY == 0:
@@ -188,8 +202,6 @@ while gameOn:
         npPlot2(ballX, ballY, ballColor)    # Turn-on LED at new ball location
         np.show()
 
-    sleep(speed)
-
     if button_a.is_pressed():
         display.scroll(hitCount)            # Show current score
 
@@ -201,11 +213,11 @@ if hitCount >= numScores:       # You won!
 else:                           # You lost!
     display.show(Image.SAD)     # Show "sad face" on 5x5 red LED display
     color = (mb, 0, 0)          # Make color = red to signal a loss.
-
-for pix in range(0, len(np)):   # Paint display either green or red to
-    np[pix] = color             # signal a game win or loss.
-
-np.show()
+    
+for pix in range(len(np) - 1, 0, -3):  # Paint display either green or red 
+    np[pix] = color                    # to signal a game win or loss.
+    np.show()
+    
 sleep(2000)
 reset()
 
