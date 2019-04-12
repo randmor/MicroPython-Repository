@@ -178,9 +178,9 @@ while True:
 '''
 # Demo #4
 # ===================================================================
-# This version of my "Hello, World!" program shows how to use the
+# This demo program shows how to use the 'microbit' library's
 # "display.show()" method to display one of some 20+ predefined
-# images. These small 5x5 images are more like "emojis".
+# images. These small 5x5 images are kind of like "emojis".
 # ===================================================================
 
 # The "microbit" library includes an object called 'Image' which
