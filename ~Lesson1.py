@@ -5,14 +5,16 @@
 # This file contains the source code to several MicroPython demo programs
 # to be used in this first lesson. It also contains much of the lesson plan.
 #
+# Part 1: Video & Into to the BBC Micro:bit and MicroPython
+#
 # To get the students to focus on the subject matter, begin Lesson #1 by
 # viewing Shawn Hymel's YouTube video called "Getting Started" at this URL:
 #
 #       https://www.youtube.com/watch?v=ZIW_6rxYNBg
 #
-# After the video, discuss the Micro:bit and MicroPython in a bit more
-# detail, answering questions students may have. Since the video is rather
-# dense in new "techno-babble", it may be worth a second watch.
+# After the video, discuss the Micro:bit and MicroPython in more detail, 
+# answering questions students may have. Since the video is rather "dense" 
+# in new "techno-babble", it may be worth a second watch.
 #
 # Using the "big screen" computer, show the students how to create the
 # "Hello, World!" program using the Microbit On-line Python Editor at this URL:
@@ -33,16 +35,16 @@
 #
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-   Review Safety with the kids...
+   Review Safety with the Students...
 
-    1.) Use microbit board on top of some non-conductive surface like a wooden
+    1.) Use the Microbit on top of some non-conductive surface like a wooden
 	table, a 1-foot square piece of cardboard or sheet of plastic. This is
 	important because it is very easy to accidently short-out the Microbit
-	board if you lay it on a metal table or on some other metal objects.
+	board if you lay it on a metal table or on some other metal object(s).
 	For this same reason, don't place metal objects on or near the Microbit
-	board. We don't want you to damage your board. [If you damage your
+	board. We don't want you to damage your board. If you damage your
 	Microbit board, you (or your parents) will have to buy a replacement,
-	which costs about $20.00.]
+	which costs about $20.00.
 
     2.) Don't play with the Microbit board in the bathtub, shower, pool or out
 	in the rain as water conducts electricity extremely well and electrical
@@ -58,20 +60,20 @@
 	right conditions. Compared to the very real risk of electrocution that
 	can happen when playing with 120V AC (from wall sockets, overhead lights,
 	etc,) the risk of electocution using AA and AAA batteries is virtually
-	non-existant (but "never say never").
+	non-existant (but, "never say never").
 
-    4.) Get in the habit of handling the board by holding the edges of the board,
+    4.) Get in the habit of handling the Microbit by holding the edges of the board,
 	since on dry days, there may be static electricity built up in your body
-	and such static shock can damage the board. Remind them of when they
-    rub their socks on a carpeted floor and then touch a door knob and get
-    a shock on dry weather days. That's the kind of shock that will damage
-    these boards. On such days, you should ground yourself before picking
+	and such static shock can damage the board. Remind the kids of when they
+        rub their socks on a carpeted floor and then touch a door knob and get
+        a shock on dry weather days. That's the kind of shock that will damage
+        these boards. On such days, you should ground yourself before picking
 	up any PCB including the Microbit board.
 
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 #
 #
-# EduBlocks for Microbit / MicroPython:
+# Part 2: EduBlocks for Microbit / MicroPython:
 #
 # If time allows, show students how to use EduBlocks, and how to save their
 # block code files as .xml files, and how to load them again. SHow the students
@@ -85,12 +87,11 @@
 # Be sure to show the students the 1-to-1 correspondance between EduBlock block
 # commands and the MicroPython text commands. Tell them that Edublocks is a tool
 # to help them transition from Scratch-like block programming over to text oriented
-# Python programming. EduBlocks can become a crutch if they never work with the
+# Python programming. EduBlocks can become a CRUTCH if they never work with the
 # text oriented Python commands, so they will be expected to know how to program
 # using text commands only.
 #
-
-
+#
 # ========
 # Demo #1
 # =============================================================
@@ -98,8 +99,7 @@
 # =============================================================
 '''
 
-
-# Demo #3
+# Demo #1
 
 from microbit import *
 
