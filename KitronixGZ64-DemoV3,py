@@ -1,0 +1,152 @@
+#
+# This program is a cleaned up version of "kitGZ64-Demo1-V2.py"
+# which is a heavily modified version of "kitGZ64-Demo1.py".
+#
+# This program is a basic "movePixel.py" program, except instead of
+# using the accelerometer for x,y positioning, they use the 4 "joypad"
+# buttons arranged in a diamond shape of the left side of the "kitGZ64"
+# board. I guess this is acceptable as this is a demo of the features
+# of the "kitGZ64" board. With a little work this program could be
+# changed into a primitive color draw program. Might be a good exercise.
+#
+# I have discovered that the music library module does not produce
+# very good beep sounds. Or at least I have not figured out how to.
+# They also seem to beep just once and then either not again, or a
+# long time later. I have had my best results using "pin2.analog_write()"
+# method and calling it with different duty cycle values and using
+# small sleep() delays between the notes to give it a more beepy sound.
+#
+# Original Program Source:  Page 5 of the following .pdf file:
+#
+#   https://www.kitronik.co.uk/pdf/5626-game-zip-64-microbit-datasheet.pdf
+#
+# Filename: "kitGZ64-Demo1-V3.py"
+#
+
+from microbit import *
+from random import randint
+import neopixel
+import music
+
+# The zplot() function allows you to address the various ZIP LEDs
+# in the 8x8 dispaly using standard x,y coordinate values.
+def zplot(x, y, color):
+    zipo[x+(y*8)] = (color[0], color[1], color[2])
+    zipo.show()
+
+# Function to play a short tune on the buzzer. The vibration motor
+# support has been removed as I find that feature annoying. The
+# "music" library does not work well to produce "beep" sounds.
+def hit_edge():
+    for i in range(0, 2):   # My code for reliably producing beeps.
+        pin2.write_analog(1023)
+        sleep(33)
+        pin2.write_analog(255)
+        sleep(99)
+        pin2.write_analog(0)
+    # Debug code:
+    display.show(Image.NO)
+    sleep(500)
+    display.clear()
+    # End of debug code.
+
+# Instantiate "zipo", the 8x8 ZIP LED display
+zipo = neopixel.NeoPixel(pin0, 64)
+
+# Define variables for x,y coordinates of lit-pixel
+x = 3
+y = 3
+
+# Set mb (maximum brightness)
+mb = 20
+
+# Set debounce delay to 20ms
+delay = 20
+
+# Define a useful set of colors using a list of lists
+colors = [[0, 0, 0], 	  # Black
+          [mb, 0, 0],     # Red
+          [0, mb, 0], 	  # Green
+          [0, 0, mb],     # Blue
+          [mb, mb, 0],    # Yellow
+          [0, mb, mb],    # Cyan
+          [mb, 0, mb],	  # Magenta
+          [mb, mb, mb]]   # White
+
+# Select a random color for the initial lit-pixel
+pixColor = colors[randint(1, len(colors) - 1)]  # Skip black
+
+zplot(x, y, pixColor)
+
+music.play(music.PYTHON, pin2, True)
+
+# While loop to run forever
+while True:
+
+    # Save previous x,y coordinates so I can unplot the lit-pixel later on.
+    oldX = x
+    oldY = y
+
+    # Note: the six new buttons provided on the "kitGZ64" board need to be
+    # debounced better in software. The key bounce often cause the lit-pixel
+    # to advance two places instead of one.
+
+    # Check Joypad-Up
+    if pin8.read_digital() == 0 and y == 0:
+        hit_edge()
+    elif pin8.read_digital() == 0 and y != 0:
+        y = y - 1
+    sleep(delay)  # debounce switch
+
+    # Check Joypad-Down
+    if pin14.read_digital() == 0 and y == 7:
+        hit_edge()
+    elif pin14.read_digital() == 0 and y != 7:
+        y = y + 1
+    sleep(delay)  # debounce switch
+
+    # Check Joypad-Left
+    if pin12.read_digital() == 0 and x == 0:
+        hit_edge()
+    elif pin12.read_digital() == 0 and x != 0:
+        x = x - 1
+    sleep(delay)  # debounce switch
+
+    # Check Joypad-Right
+    if pin13.read_digital() == 0 and x == 7:
+        hit_edge()
+    elif pin13.read_digital() == 0 and x != 7:
+        x = x + 1
+    sleep(delay)  # debounce switch
+
+    # Check Fire Button #1 to decrement thru "colors" array
+    # to select a new color for the lit-pixel.
+    if pin15.read_digital() == 0:
+        if colors.index(pixColor) - 1 < 0:
+            pixColor = colors[0]
+        else:
+            pixColor = colors[(colors.index(pixColor) - 1)]
+    sleep(delay)  # debounce switch
+
+    # Check Fire Button #2 to increment thru the "colors" array
+    # to select a new color for the lit-pixel.
+    if pin16.read_digital() == 0:
+        if colors.index(pixColor) + 1 > 7:
+            pixColor = colors[7]
+        else:
+            pixColor = colors[(colors.index(pixColor) + 1)]
+    sleep(delay)  # debounce switch
+
+    # Clear and redisplay the ZIP LEDs after each button press check
+    # zipo.clear()  # Should unplot previous lit-pixel, not clear display
+
+    # Comment out the next line of code to make this program
+    # work more like a simple draw program.
+    zplot(oldX, oldY, colors[0])  # black (turn-off previous lit-pixel)
+    zplot(x, y, pixColor)
+
+    # 100ms pause before restarting the while loop
+    sleep(100 - delay)  # Subtract out the button debounce delay so as
+                        # not to slow down the game play.
+
+# EOF
